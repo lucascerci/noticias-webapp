@@ -1,10 +1,11 @@
 module.exports = function(app){
     app.get('/formulario_add_noticia', function(req, res){
-        res.render("admin/form_add_noticia");
+        res.render("admin/form_add_noticia", {validacao: {}, noticia: {}});
     });
 
     app.post('/noticias/salvar', function(req, res){
         var noticia = req.body;
+        console.log(noticia)
 
         req.assert('titulo', 'Titulo é obrigatório').notEmpty();
         req.assert('autor', 'Autor é obrigatório').notEmpty();
@@ -16,7 +17,7 @@ module.exports = function(app){
         var erros = req.validationErrors();
 
         if(erros){
-            res.render("admin/form_add_noticia");
+            res.render("admin/form_add_noticia", {validacao: erros, noticia : noticia});
             return;
         }
 
